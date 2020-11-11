@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Robot;
 
+import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -7,10 +8,12 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class MecanumBot extends Bot
 {
 
-    public MotorEx lFMotor;
-    public MotorEx lBMotor;
-    public MotorEx rFMotor;
-    public MotorEx rBMotor;
+    private MotorEx lFMotor;
+    private MotorEx lBMotor;
+    private MotorEx rFMotor;
+    private MotorEx rBMotor;
+
+    public MecanumDrive mecanumDrive;
 
     public MecanumBot(HardwareMap hardwareMap)
     {
@@ -30,6 +33,7 @@ public class MecanumBot extends Bot
         lBMotor = new MotorEx(hardwareMap, "leftBack", Motor.GoBILDA.RPM_312);
         rFMotor = new MotorEx(hardwareMap, "rightFront", Motor.GoBILDA.RPM_312);
         rBMotor = new MotorEx(hardwareMap, "rightBack", Motor.GoBILDA.RPM_312);
+        mecanumDrive = new MecanumDrive(true, lFMotor, rFMotor, lBMotor, rBMotor);
     }
 
     public void setZPB(Motor.ZeroPowerBehavior zpb)
