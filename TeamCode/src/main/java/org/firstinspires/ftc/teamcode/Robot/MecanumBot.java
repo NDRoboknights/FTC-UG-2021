@@ -1,40 +1,45 @@
 package org.firstinspires.ftc.teamcode.Robot;
 
-import com.arcrobotics.ftclib.drivebase.MecanumDrive;
-import com.arcrobotics.ftclib.geometry.Vector2d;
-import com.arcrobotics.ftclib.hardware.motors.Motor;
-import com.arcrobotics.ftclib.hardware.motors.MotorEx;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class MecanumBot extends Bot
 {
 
-	public MotorEx lFMotor;
-	public MotorEx lBMotor;
-	public MotorEx rFMotor;
-	public MotorEx rBMotor;
+	public DcMotorEx lFMotor;
+	public DcMotorEx lBMotor;
+	public DcMotorEx rFMotor;
+	public DcMotorEx rBMotor;
 
 	public MecanumBot(HardwareMap hardwareMap)
 	{
 		init(hardwareMap);
-		setZPB(Motor.ZeroPowerBehavior.BRAKE);
+		setZPB(DcMotorEx.ZeroPowerBehavior.BRAKE);
 	}
 
-	public MecanumBot(HardwareMap hardwareMap, Motor.ZeroPowerBehavior zeroPowerBehavior)
+	public MecanumBot(HardwareMap hardwareMap, DcMotorEx.ZeroPowerBehavior zeroPowerBehavior)
 	{
-		//init(hardwareMap);
-		//setZPB(zeroPowerBehavior);
+		init(hardwareMap);
+		setZPB(zeroPowerBehavior);
 	}
 
 	public void init(HardwareMap hardwareMap)
 	{
-		lFMotor = new MotorEx(hardwareMap, "leftFront", Motor.GoBILDA.RPM_312);
-		lBMotor = new MotorEx(hardwareMap, "leftBack", Motor.GoBILDA.RPM_312);
-		rFMotor = new MotorEx(hardwareMap, "rightFront", Motor.GoBILDA.RPM_312);
-		rBMotor = new MotorEx(hardwareMap, "rightBack", Motor.GoBILDA.RPM_312);
+		lFMotor = hardwareMap.get(DcMotorEx.class, "leftFront");
+		lFMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+		lFMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+		lBMotor = hardwareMap.get(DcMotorEx.class, "leftBack");
+		lBMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+		lBMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+		rFMotor = hardwareMap.get(DcMotorEx.class, "rightFront");
+		rFMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+		rBMotor = hardwareMap.get(DcMotorEx.class, "rightBack");
+		rBMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 	}
 
-	public void setZPB(Motor.ZeroPowerBehavior zpb)
+	public void setZPB(DcMotor.ZeroPowerBehavior zpb)
 	{
 		lFMotor.setZeroPowerBehavior(zpb);
 		rFMotor.setZeroPowerBehavior(zpb);

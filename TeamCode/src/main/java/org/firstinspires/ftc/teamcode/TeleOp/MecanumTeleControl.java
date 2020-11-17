@@ -50,10 +50,10 @@ public class MecanumTeleControl extends OpMode {
 		motorPowerBackLeft = motorPowerBackLeft * power + turn;
 		motorPowerBackRight = motorPowerBackRight * power - turn;
 
-		bot.lFMotor.set(motorPowerFrontLeft);
-		bot.rFMotor.set(motorPowerFrontRight);
-		bot.lBMotor.set(motorPowerBackLeft);
-		bot.rBMotor.set(motorPowerBackRight);
+		bot.lFMotor.setPower(motorPowerFrontLeft);
+		bot.rFMotor.setPower(motorPowerFrontRight);
+		bot.lBMotor.setPower(motorPowerBackLeft);
+		bot.rBMotor.setPower(motorPowerBackRight);
 
 	}
 }
