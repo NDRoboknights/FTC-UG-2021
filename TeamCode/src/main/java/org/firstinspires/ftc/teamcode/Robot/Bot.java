@@ -7,9 +7,4 @@ public abstract class Bot
 {
     public abstract void init(HardwareMap hMap);
     public abstract void setZPB(DcMotor.ZeroPowerBehavior zpb);
-
-    public static double checkStick(double stickY){
-
-        return 0;
-    }
 }
