@@ -1,9 +1,12 @@
 package org.firstinspires.ftc.teamcode.Robot;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import org.firstinspires.ftc.teamcode.util.REVHubIMU;
 
 public class MecanumBot extends Bot
 {
@@ -13,6 +16,8 @@ public class MecanumBot extends Bot
 	public DcMotorEx rFMotor;
 	public DcMotorEx rBMotor;
 
+	public REVHubIMU imu;
+	private BNO055IMU bno055IMU;
 	public MecanumBot(HardwareMap hardwareMap)
 	{
 		init(hardwareMap);
@@ -37,6 +42,8 @@ public class MecanumBot extends Bot
 		rFMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 		rBMotor = hardwareMap.get(DcMotorEx.class, "rightBack");
 		rBMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+		imu = new REVHubIMU(hardwareMap, "imu", bno055IMU);
 	}
 
 	public void setZPB(DcMotor.ZeroPowerBehavior zpb)
@@ -48,6 +55,8 @@ public class MecanumBot extends Bot
 	}
 
 	public double getAngle(double xComponent, double yComponent){
-		return Math.toDegrees(Math.atan(yComponent / xComponent));
+		return Math.toDegrees(Math.atan2(yComponent , xComponent));
 	}
+
+
 }

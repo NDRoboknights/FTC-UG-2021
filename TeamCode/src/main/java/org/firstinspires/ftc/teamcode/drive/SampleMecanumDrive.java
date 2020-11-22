@@ -25,6 +25,7 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
@@ -83,7 +84,10 @@ public class SampleMecanumDrive extends MecanumDrive {
 
     private LinkedList<Pose2d> poseHistory;
 
-    private DcMotorEx leftFront, leftRear, rightRear, rightFront;
+    public DcMotorEx lFMotor;
+    public DcMotorEx lBMotor;
+    public DcMotorEx rFMotor;
+    public DcMotorEx rBMotor;
     private List<DcMotorEx> motors;
     private BNO055IMU imu;
 
@@ -128,12 +132,14 @@ public class SampleMecanumDrive extends MecanumDrive {
         // upward (normal to the floor) using a command like the following:
         // BNO055IMUUtil.remapAxes(imu, AxesOrder.XYZ, AxesSigns.NPN);
 
-        leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
-        leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
-        rightRear = hardwareMap.get(DcMotorEx.class, "rightRear");
-        rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
+        lFMotor = hardwareMap.get(DcMotorEx.class, "leftFront");
+        lFMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        lBMotor = hardwareMap.get(DcMotorEx.class, "leftBack");
+        lBMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        rFMotor = hardwareMap.get(DcMotorEx.class, "rightFront");
+        rBMotor = hardwareMap.get(DcMotorEx.class, "rightBack");
 
-        motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
+        motors = Arrays.asList(lFMotor, lBMotor, rFMotor, rBMotor);
 
         for (DcMotorEx motor : motors) {
             MotorConfigurationType motorConfigurationType = motor.getMotorType().clone();
@@ -373,10 +379,10 @@ public class SampleMecanumDrive extends MecanumDrive {
 
     @Override
     public void setMotorPowers(double v, double v1, double v2, double v3) {
-        leftFront.setPower(v);
-        leftRear.setPower(v1);
-        rightRear.setPower(v2);
-        rightFront.setPower(v3);
+        lFMotor.setPower(v);
+        lBMotor.setPower(v1);
+        rBMotor.setPower(v2);
+        rFMotor.setPower(v3);
     }
 
     @Override
