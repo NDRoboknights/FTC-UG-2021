@@ -26,7 +26,7 @@ public class MecanumTeleControl extends OpMode {
 	@Override
 	public void loop()
 	{
-		angle = bot.getAngle(gamepad1.left_stick_y, gamepad1.left_stick_x) + 45;
+		angle = bot.getAngle(gamepad1.left_stick_y, gamepad1.left_stick_x) + Math.toRadians(45);
 		turn = gamepad1.right_stick_x;
 		power = Math.sqrt(Math.pow(gamepad1.left_stick_y, 2) + Math.pow(gamepad1.left_stick_x, 2));
 
@@ -55,7 +55,7 @@ public class MecanumTeleControl extends OpMode {
 		bot.lBMotor.setPower(motorPowerBackLeft);
 		bot.rBMotor.setPower(motorPowerBackRight);
 
-		telemetry.addData("Strafe heading: ", angle);
+		telemetry.addData("Strafe heading: ", Math.toDegrees(angle) - 45);
 		telemetry.addData("Angle X: ", bot.imu.getXAxisValue());
 		telemetry.addData("Angle Y: ", bot.imu.getYAxisValue());
 		telemetry.addData("Angle Z: ", bot.imu.getZAxisValue());

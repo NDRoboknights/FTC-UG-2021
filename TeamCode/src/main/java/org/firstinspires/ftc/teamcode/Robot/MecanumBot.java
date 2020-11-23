@@ -34,10 +34,10 @@ public class MecanumBot extends Bot
 	{
 		lFMotor = hardwareMap.get(DcMotorEx.class, "leftFront");
 		lFMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-		lFMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+		rFMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 		lBMotor = hardwareMap.get(DcMotorEx.class, "leftBack");
 		lBMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-		lBMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+		rBMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 		rFMotor = hardwareMap.get(DcMotorEx.class, "rightFront");
 		rFMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 		rBMotor = hardwareMap.get(DcMotorEx.class, "rightBack");
@@ -55,8 +55,6 @@ public class MecanumBot extends Bot
 	}
 
 	public double getAngle(double xComponent, double yComponent){
-		return Math.toDegrees(Math.atan2(yComponent , xComponent));
+		return Math.atan2(yComponent , xComponent);
 	}
-
-
 }
