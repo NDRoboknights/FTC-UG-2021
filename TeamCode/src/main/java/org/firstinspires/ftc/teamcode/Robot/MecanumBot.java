@@ -34,14 +34,14 @@ public class MecanumBot extends Bot
 	{
 		lFMotor = hardwareMap.get(DcMotorEx.class, "leftFront");
 		lFMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-		rFMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 		lBMotor = hardwareMap.get(DcMotorEx.class, "leftBack");
 		lBMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-		rBMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 		rFMotor = hardwareMap.get(DcMotorEx.class, "rightFront");
 		rFMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+		rFMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 		rBMotor = hardwareMap.get(DcMotorEx.class, "rightBack");
 		rBMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+		rBMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
 		imu = new REVHubIMU(hardwareMap, "imu", bno055IMU);
 	}
