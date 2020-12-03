@@ -15,11 +15,25 @@
 apply from: '../build.common.gradle'
 
 repositories {
+    jcenter()
+
+    maven {
+        url "https://maven.0x778.tk"
+    }
+}
+
+dependencies {
+    // This will get the latest compatible version
+    implementation 'com.spartronics4915.lib:ftc265:2.1.2'
+}
+
+repositories {
     maven { url = "https://dl.bintray.com/first-tech-challenge/ftcsdk/" }
 }
 
 dependencies {
     annotationProcessor files('lib/OpModeAnnotationProcessor.jar')
     implementation 'com.arcrobotics.ftclib:vision:1.1.0' // vision
-    implementation 'com.arcrobotics:ftclib:1.1.3' // core
+    implementation 'com.arcrobotics:ftclib:1.1.6' // core
+    implementation 'com.openftc:rev-extensions-2:1.2' //REV Extensions: REV Bulk Reads
 }
