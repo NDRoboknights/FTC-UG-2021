@@ -18,6 +18,7 @@ public class MecanumBot extends Bot
 
 	public REVHubIMU imu;
 	private BNO055IMU bno055IMU;
+
 	public MecanumBot(HardwareMap hardwareMap)
 	{
 		init(hardwareMap);
