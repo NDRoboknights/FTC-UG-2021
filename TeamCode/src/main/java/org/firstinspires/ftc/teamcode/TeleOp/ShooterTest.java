@@ -16,9 +16,12 @@ public class ShooterTest extends OpMode {
     DcMotorEx s1;
     DcMotorEx s2;
 
-    double kP, kI, kD, kV, kA, kStatic = 0;
+    double motorVelocity = 5000.00;
 
-    VelocityPIDFController controller = new VelocityPIDFController(new PIDCoefficients(kP, kI, kD), kV, kA, kStatic);
+    //double kP, kI, kD, kV, kA, kStatic = 0;
+
+    //VelocityPIDFController controller = new VelocityPIDFController(new PIDCoefficients(kP, kI, kD), kV, kA, kStatic);
+
     public void init()
     {
         s1 = hardwareMap.get(DcMotorEx.class, "s1");
@@ -35,11 +38,22 @@ public class ShooterTest extends OpMode {
 
     public void loop()
     {
-        s1.setPower(1);
-        s2.setPower(1);
-        telemetry.addData("Shooter 1 Velocity: ", s1.getVelocity());
-        telemetry.addData("Shooter 2 Velocity: ", s2.getVelocity());
+        s1.setVelocity(((motorVelocity * 28) / 60));
+        s2.setVelocity(((motorVelocity * 28) / 60));
+
+        if(gamepad1.dpad_down){
+            motorVelocity -= 5;
+        }
+
+        if(gamepad1.dpad_up){
+            motorVelocity += 5;
+        }
+
+        telemetry.addData("Nominal Velocity (rpm)", motorVelocity);
+        telemetry.addData("Shooter 1 Velocity (rpm): ", (s1.getVelocity() / 28) * 60);
+        telemetry.addData("Shooter 2 Velocity (rpm): ", (s2.getVelocity() / 28) * 60);
 
         telemetry.update();
+
     }
 }

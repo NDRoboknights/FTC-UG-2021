@@ -7,21 +7,21 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
-@TeleOp(name = "SingleMotorShooterTest")
-public class SingleMotorShooterTest extends OpMode {
+@TeleOp(name = "IntakeTest")
+public class IntakeTest extends OpMode {
 
-    DcMotorEx s1;
+    DcMotorEx intake;
 
-    public void init()
+    public void init() 
     {
-        s1 = hardwareMap.get(DcMotorEx.class, "s1");
-        s1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        intake = hardwareMap.get(DcMotorEx.class, "intake");
+        intake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void loop()
     {
-        s1.setPower(1);
-        telemetry.addData("Shooter 1 Velocity: ", s1.getVelocity(AngleUnit.DEGREES) * (1.0/6.0));
+        intake.setPower(1);
+        telemetry.addData("Intake Velocity: ", (intake.getVelocity() / 28) * 60);
         telemetry.update();
     }
 }

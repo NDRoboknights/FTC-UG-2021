@@ -21,7 +21,7 @@ import com.qualcomm.robotcore.util.MovingStatistics;
 @Config
 public class HighFrequencyPIDTest extends LinearOpMode {
 	public static double MOTOR_TICKS_PER_REV = 28;
-	public static double MOTOR_MAX_RPM = 5800;
+	public static double MOTOR_MAX_RPM = 5000;
 	public static double MOTOR_GEAR_RATIO = 1; // output (wheel) speed / input (motor) speed
 
 	public static double TESTING_MAX_SPEED = 0.9 * MOTOR_MAX_RPM;
@@ -38,8 +38,8 @@ public class HighFrequencyPIDTest extends LinearOpMode {
 	public static double STATE7_RANDOM_3_DURATION = 2;
 	public static double STATE8_REST_DURATION = 1;
 
-	public static PIDCoefficients MOTOR_VELO_PID = new PIDCoefficients(0, 0, 0);
-	public static double kV = 0;
+	public static PIDCoefficients MOTOR_VELO_PID = new PIDCoefficients(0.007, 0, 0.000035);
+	public static double kV = 0.007;
 	//    public static double kV = 1 / rpmToTicksPerSecond(5400);
 	public static double kA = 0;
 	public static double kStatic = 0;
