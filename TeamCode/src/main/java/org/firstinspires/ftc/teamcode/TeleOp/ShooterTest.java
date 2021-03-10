@@ -10,6 +10,8 @@ import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigu
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.PID.VelocityPIDFController;
 
+import java.util.Arrays;
+
 @TeleOp(name = "DualMotorShooterTest")
 public class ShooterTest extends OpMode {
 
@@ -55,5 +57,11 @@ public class ShooterTest extends OpMode {
 
         telemetry.update();
 
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            telemetry.addData("error? ", Arrays.toString(e.getStackTrace()));
+            telemetry.update();
+        }
     }
 }

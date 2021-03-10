@@ -7,6 +7,8 @@ import org.firstinspires.ftc.teamcode.Robot.MecanumBot;
 
 import java.util.Scanner;
 
+import static java.lang.StrictMath.abs;
+
 @TeleOp(name = "MecanumDrive")
 public class MecanumTeleControl extends OpMode {
 	private static final double STICK_THRESH = 0.09375;
@@ -55,10 +57,22 @@ public class MecanumTeleControl extends OpMode {
 		bot.lBMotor.setPower(motorPowerBackLeft);
 		bot.rBMotor.setPower(motorPowerBackRight);
 
+		if (Math.abs(gamepad1.right_stick_y) > STICK_THRESH) {
+			bot.intake.setPower(-1);
+		}
+		else if (gamepad1.left_trigger > 0.05) {
+			bot.intake.setPower(1);
+		}
+		else{
+			bot.intake.setPower(0);
+		}
+		
 		telemetry.addData("Strafe heading: ", Math.toDegrees(angle) - 45);
 		telemetry.addData("Angle X: ", bot.imu.getXAxisValue());
 		telemetry.addData("Angle Y: ", bot.imu.getYAxisValue());
 		telemetry.addData("Angle Z: ", bot.imu.getZAxisValue());
+		telemetry.addData("Left Trigger", gamepad1.left_trigger);
+		telemetry.addData("Right Trigger", gamepad1.right_trigger);
 
 		telemetry.update();
 	}

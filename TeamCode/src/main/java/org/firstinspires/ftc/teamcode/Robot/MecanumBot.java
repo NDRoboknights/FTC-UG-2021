@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
 import org.firstinspires.ftc.teamcode.util.REVHubIMU;
 
@@ -15,6 +16,8 @@ public class MecanumBot extends Bot
 	public DcMotorEx lBMotor;
 	public DcMotorEx rFMotor;
 	public DcMotorEx rBMotor;
+
+	public DcMotorEx intake;
 
 	public REVHubIMU imu;
 	private BNO055IMU bno055IMU;
@@ -43,6 +46,13 @@ public class MecanumBot extends Bot
 		rBMotor = hardwareMap.get(DcMotorEx.class, "rightBack");
 		rBMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 		rBMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+
+		intake = hardwareMap.get(DcMotorEx.class, "intake");
+		intake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+		MotorConfigurationType motorConfigurationType = intake.getMotorType().clone();
+		motorConfigurationType.setAchieveableMaxRPMFraction(1.0);
+		intake.setMotorType(motorConfigurationType);
 
 		imu = new REVHubIMU(hardwareMap, "imu", bno055IMU);
 	}
