@@ -12,10 +12,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.drive.opmode.Autos.RingDetectorV3;
-import org.firstinspires.ftc.teamcode.drive.opmode.Hardware.Imperium;
-import org.firstinspires.ftc.teamcode.drive.opmode.Hardware.Shooter;
-import org.firstinspires.ftc.teamcode.drive.opmode.Vision.UGRectDetector;
 
 @Config
 @Autonomous(name = "CVTestAuto", group = "Out of this World")
