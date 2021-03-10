@@ -16,6 +16,7 @@ apply from: '../build.common.gradle'
 
 repositories {
     jcenter()
+    mavenLocal()
 
     maven {
         url "https://maven.0x778.tk"
@@ -36,5 +37,5 @@ dependencies {
     implementation 'com.noahbres.jotai:jotai:1.0.2'
     implementation 'com.spartronics4915.lib:ftc265:2.1.2'
     implementation 'org.openftc:easyopencv:1.4.4'
-    implementation 'com.roboknights4348.lib:wpiforftc:2.1.2'
+    implementation 'com.roboknights4348.lib:wpiforftc:1.0'
 }
