@@ -18,24 +18,17 @@ repositories {
     jcenter()
     mavenLocal()
 
-    maven {
-        url "https://maven.0x778.tk"
-    }
-}
-
-
-
-repositories {
+    maven { url "https://maven.0x778.tk" }
     maven { url = "https://dl.bintray.com/first-tech-challenge/ftcsdk/" }
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
     annotationProcessor files('lib/OpModeAnnotationProcessor.jar')
     implementation 'com.arcrobotics.ftclib:vision:1.1.0' // vision
     implementation 'com.arcrobotics:ftclib:1.1.6' // core
-    implementation 'com.openftc:rev-extensions-2:1.2' //REV Extensions: REV Bulk Reads
     implementation 'com.noahbres.jotai:jotai:1.0.2'
-    implementation 'com.spartronics4915.lib:ftc265:2.1.2'
+    implementation 'com.spartronics4915.lib:ftc265:2.1.8'
     implementation 'org.openftc:easyopencv:1.4.4'
-    implementation 'com.roboknights4348.lib:wpiforftc:1.0'
+    implementation 'com.github.NDRoboknights:ftc265:1.10'
 }
