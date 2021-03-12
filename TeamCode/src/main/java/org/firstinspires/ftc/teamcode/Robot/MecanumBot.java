@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.Robot;
 
+import com.arcrobotics.ftclib.geometry.Translation2d;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
+import com.roboknights4348.lib.wpimath.src.main.java.edu.wpi.first.wpilibj.kinematics.MecanumDriveKinematics;
 
 import org.firstinspires.ftc.teamcode.util.REVHubIMU;
 
@@ -21,6 +23,12 @@ public class MecanumBot extends Bot
 
 	public REVHubIMU imu;
 	private BNO055IMU bno055IMU;
+
+	public MecanumDriveKinematics mecanumDriveKinematics = new MecanumDriveKinematics(
+			new Translation2d(-0.217, 0.168),
+			new Translation2d(0.217, 0.168),
+			new Translation2d(-0.217, -0.168),
+			new Translation2d(0.217, -0.168));
 
 	public MecanumBot(HardwareMap hardwareMap)
 	{
