@@ -2,17 +2,16 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
 import org.firstinspires.ftc.teamcode.Robot.MecanumBot;
-
-import java.util.Scanner;
-
-import static java.lang.StrictMath.abs;
 
 @TeleOp(name = "MecanumDrive")
 public class MecanumTeleControl extends OpMode {
 	private static final double STICK_THRESH = 0.09375;
+
+
 	MecanumBot bot;
+	ShooterTest shooter;
+	IntakeTest intake;
 
 	double angle = 0;
 	double power = 0;
@@ -23,6 +22,12 @@ public class MecanumTeleControl extends OpMode {
 	{
 		bot = new MecanumBot(hardwareMap);
 		bot.init(hardwareMap);
+
+		shooter = new ShooterTest(bot, hardwareMap, gamepad1);
+		intake = new IntakeTest(bot, hardwareMap, gamepad1);
+
+		intake.init();
+		shooter.init();
 	}
 
 	@Override
@@ -52,21 +57,14 @@ public class MecanumTeleControl extends OpMode {
 		motorPowerBackLeft = motorPowerBackLeft * power + turn;
 		motorPowerBackRight = motorPowerBackRight * power - turn;
 
-		bot.lFMotor.setPower(motorPowerFrontLeft);
-		bot.rFMotor.setPower(motorPowerFrontRight);
-		bot.lBMotor.setPower(motorPowerBackLeft);
-		bot.rBMotor.setPower(motorPowerBackRight);
+		bot.lFMotor.setVelocity(((MecanumBot.DRIVE_VELOCITY*motorPowerFrontLeft)*MecanumBot.YJ312_TICKS_PER_REVOLUTION)/60);
+		bot.rFMotor.setVelocity(((MecanumBot.DRIVE_VELOCITY*motorPowerFrontRight)*MecanumBot.YJ312_TICKS_PER_REVOLUTION)/60);
+		bot.lBMotor.setVelocity(((MecanumBot.DRIVE_VELOCITY*motorPowerBackLeft)*MecanumBot.YJ312_TICKS_PER_REVOLUTION)/60);
+		bot.rBMotor.setVelocity(((MecanumBot.DRIVE_VELOCITY*motorPowerBackRight)*MecanumBot.YJ312_TICKS_PER_REVOLUTION)/60);
 
-		if (Math.abs(gamepad1.right_stick_y) > STICK_THRESH) {
-			bot.intake.setPower(-1);
-		}
-		else if (gamepad1.left_trigger > 0.05) {
-			bot.intake.setPower(1);
-		}
-		else{
-			bot.intake.setPower(0);
-		}
-		
+		shooter.loop();
+		intake.loop();
+
 		telemetry.addData("Strafe heading: ", Math.toDegrees(angle) - 45);
 		telemetry.addData("Angle X: ", bot.imu.getXAxisValue());
 		telemetry.addData("Angle Y: ", bot.imu.getYAxisValue());

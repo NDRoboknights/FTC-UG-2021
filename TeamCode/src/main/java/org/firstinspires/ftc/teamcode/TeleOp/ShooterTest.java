@@ -1,67 +1,60 @@
 package org.firstinspires.ftc.teamcode.TeleOp;
 
-import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
+import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.teamcode.PID.VelocityPIDFController;
+import org.firstinspires.ftc.teamcode.Robot.MecanumBot;
 
-import java.util.Arrays;
 
 @TeleOp(name = "DualMotorShooterTest")
 public class ShooterTest extends OpMode {
 
-    DcMotorEx s1;
-    DcMotorEx s2;
+    HardwareMap hardware;
+    MecanumBot bot;
+    Gamepad gamepadF310;
+    boolean xChanged, bChanged = false;
 
-    double motorVelocity = 5000.00;
+    public ShooterTest(MecanumBot mecanumBot, HardwareMap hMap, Gamepad gamepad)
+    {
+        this.bot = mecanumBot;
+        this.hardware = hMap;
+        this.gamepadF310 = gamepad;
+    }
 
-    //double kP, kI, kD, kV, kA, kStatic = 0;
-
-    //VelocityPIDFController controller = new VelocityPIDFController(new PIDCoefficients(kP, kI, kD), kV, kA, kStatic);
 
     public void init()
     {
-        s1 = hardwareMap.get(DcMotorEx.class, "s1");
-        s2 = hardwareMap.get(DcMotorEx.class, "s2");
-        s1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        s2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        //unlocks built in velocity pid to 100% power
-        MotorConfigurationType motorConfigurationType = s1.getMotorType().clone();
-        motorConfigurationType.setAchieveableMaxRPMFraction(1.0);
-        s1.setMotorType(motorConfigurationType);
-        s2.setMotorType(motorConfigurationType);
+        bot = new MecanumBot(hardware);
+        bot.init(hardware);
     }
 
     public void loop()
     {
-        s1.setVelocity(((motorVelocity * 28) / 60));
-        s2.setVelocity(((motorVelocity * 28) / 60));
-
-        if(gamepad1.dpad_down){
-            motorVelocity -= 5;
+        if(gamepadF310.x && !xChanged)
+        {
+            bot.s1.setVelocity(((MecanumBot.INTAKE_VELOCITY * 145.6) / 60));
+            bot.s2.setVelocity(((MecanumBot.INTAKE_VELOCITY * 145.6) / 60));
+            xChanged = true;
+        }else if(!gamepadF310.x)
+            {
+            xChanged = false;
         }
 
-        if(gamepad1.dpad_up){
-            motorVelocity += 5;
+        if(gamepadF310.b && !bChanged)
+        {
+            bot.hopper.setPower(1);
+            bChanged = true;
+        }else if(!gamepadF310.b)
+            {
+            bChanged = false;
         }
-
-        telemetry.addData("Nominal Velocity (rpm)", motorVelocity);
-        telemetry.addData("Shooter 1 Velocity (rpm): ", (s1.getVelocity() / 28) * 60);
-        telemetry.addData("Shooter 2 Velocity (rpm): ", (s2.getVelocity() / 28) * 60);
+        
+        telemetry.addData("Nominal Velocity (rpm)", MecanumBot.SHOOTER_VELOCITY);
+        telemetry.addData("Shooter 1 Velocity (rpm): ", (bot.s1.getVelocity() / 28) * 60);
+        telemetry.addData("Shooter 2 Velocity (rpm): ", (bot.s2.getVelocity() / 28) * 60);
 
         telemetry.update();
-
-        try {
-            Thread.sleep(50);
-        } catch (InterruptedException e) {
-            telemetry.addData("error? ", Arrays.toString(e.getStackTrace()));
-            telemetry.update();
-        }
     }
 }

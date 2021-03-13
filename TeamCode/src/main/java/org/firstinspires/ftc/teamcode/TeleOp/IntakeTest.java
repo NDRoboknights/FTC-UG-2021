@@ -2,26 +2,43 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.Robot.MecanumBot;
+
 
 @TeleOp(name = "IntakeTest")
 public class IntakeTest extends OpMode {
 
-    DcMotorEx intake;
+    HardwareMap hardware;
+    MecanumBot bot;
+    Gamepad gamepadF310;
+    boolean aChanged = false;
 
-    public void init() 
+    public IntakeTest(MecanumBot mecanumBot, HardwareMap hMap, Gamepad gamepad)
     {
-        intake = hardwareMap.get(DcMotorEx.class, "intake");
-        intake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.bot = mecanumBot;
+        this.hardware = hMap;
+        this.gamepadF310 = gamepad;
+    }
+
+
+    public void init()
+    {
+        bot = new MecanumBot(hardware);
+        bot.init(hardware);
     }
 
     public void loop()
     {
-        intake.setPower(1);
-        telemetry.addData("Intake Velocity: ", (intake.getVelocity() / 28) * 60);
-        telemetry.update();
+        if(gamepadF310.a && !aChanged)
+        {
+            bot.intake.setVelocity(((MecanumBot.SHOOTER_VELOCITY * 28) / 60));
+            aChanged = true;
+        }else if(!gamepadF310.a)
+        {
+            aChanged = false;
+        }
     }
 }
