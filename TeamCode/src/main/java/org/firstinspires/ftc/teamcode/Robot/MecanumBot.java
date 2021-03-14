@@ -1,7 +1,11 @@
 package org.firstinspires.ftc.teamcode.Robot;
 
+import com.arcrobotics.ftclib.geometry.Rotation2d;
+import com.arcrobotics.ftclib.geometry.Transform2d;
 import com.arcrobotics.ftclib.geometry.Translation2d;
+import com.arcrobotics.ftclib.kinematics.wpilibkinematics.MecanumDriveWheelSpeeds;
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -10,6 +14,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 import com.roboknights4348.lib.wpimath.src.main.java.edu.wpi.first.wpilibj.kinematics.MecanumDriveKinematics;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.util.REVHubIMU;
 
 public class MecanumBot extends Bot
@@ -24,6 +29,12 @@ public class MecanumBot extends Bot
 	public static final double YJ1150_TICKS_PER_REVOLUTION = 145.6;
 	public static final double YJ312_TICKS_PER_REVOLUTION = 537.6;
 
+	public static final double encoderMeasurementCovariance = 0.75;
+
+	public static final Transform2d cameraRelativePosition = new Transform2d(
+	        new Translation2d(0.14475, 0.20050), new Rotation2d()
+    );
+
 	public DcMotorEx lFMotor;
 	public DcMotorEx lBMotor;
 	public DcMotorEx rFMotor;
@@ -33,6 +44,8 @@ public class MecanumBot extends Bot
 
 	public REVHubIMU imu;
 	private BNO055IMU bno055IMU;
+	public Rev2mDistanceSensor xDist;
+	public Rev2mDistanceSensor yDist;
 
 	public DcMotorEx s1;
 	public DcMotorEx s2;
@@ -66,7 +79,6 @@ public class MecanumBot extends Bot
 		lBMotor = hardwareMap.get(DcMotorEx.class, "leftBack");
 		lBMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 		rFMotor = hardwareMap.get(DcMotorEx.class, "rightFront");
-		rFMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 		rFMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 		rBMotor = hardwareMap.get(DcMotorEx.class, "rightBack");
 		rBMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -89,7 +101,7 @@ public class MecanumBot extends Bot
 
 		//unlocks built in velocity pid to 100% power
 		MotorConfigurationType motorConfigurationType = s1.getMotorType().clone();
-		motorConfigurationType.setAchieveableMaxRPMFraction(1.2);
+		motorConfigurationType.setAchieveableMaxRPMFraction(1);
 		s1.setMotorType(motorConfigurationType);
 		s2.setMotorType(motorConfigurationType);
 		hopper.setMotorType(motorConfigurationType);
@@ -99,8 +111,9 @@ public class MecanumBot extends Bot
 		rFMotor.setMotorType(motorConfigurationType);
 		rBMotor.setMotorType(motorConfigurationType);
 
-
 		imu = new REVHubIMU(hardwareMap, "imu", bno055IMU);
+		xDist = hardwareMap.get(Rev2mDistanceSensor.class, "xDist");
+		yDist = hardwareMap.get(Rev2mDistanceSensor.class, "yDist");
 	}
 
 	public void setZPB(DcMotor.ZeroPowerBehavior zpb)
@@ -114,4 +127,32 @@ public class MecanumBot extends Bot
 	public double getAngle(double xComponent, double yComponent){
 		return Math.atan2(yComponent , xComponent);
 	}
+
+	public void driveForTime(double power, long time)
+	{
+		lFMotor.setPower(power);
+		lBMotor.setPower(power);
+		rFMotor.setPower(power);
+		rBMotor.setPower(power);
+
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		lFMotor.setPower(0);
+		lBMotor.setPower(0);
+		rFMotor.setPower(0);
+		rBMotor.setPower(0);
+	}
+
+	public MecanumDriveWheelSpeeds getWheelSpeeds()
+	{
+		return new MecanumDriveWheelSpeeds(lFMotor.getVelocity(AngleUnit.RADIANS)*0.096,
+				rFMotor.getVelocity(AngleUnit.RADIANS)*0.096,
+				lBMotor.getVelocity(AngleUnit.RADIANS)*0.096,
+				rBMotor.getVelocity(AngleUnit.RADIANS)*0.096);
+	}
+
 }

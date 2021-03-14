@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.Robot.MecanumBot;
 
-@TeleOp(name = "MecanumDrive")
+@TeleOp(name = "FullTeleOp")
 public class MecanumTeleControl extends OpMode {
 	private static final double STICK_THRESH = 0.09375;
 
@@ -57,10 +57,10 @@ public class MecanumTeleControl extends OpMode {
 		motorPowerBackLeft = motorPowerBackLeft * power + turn;
 		motorPowerBackRight = motorPowerBackRight * power - turn;
 
-		bot.lFMotor.setVelocity(((MecanumBot.DRIVE_VELOCITY*motorPowerFrontLeft)*MecanumBot.YJ312_TICKS_PER_REVOLUTION)/60);
-		bot.rFMotor.setVelocity(((MecanumBot.DRIVE_VELOCITY*motorPowerFrontRight)*MecanumBot.YJ312_TICKS_PER_REVOLUTION)/60);
-		bot.lBMotor.setVelocity(((MecanumBot.DRIVE_VELOCITY*motorPowerBackLeft)*MecanumBot.YJ312_TICKS_PER_REVOLUTION)/60);
-		bot.rBMotor.setVelocity(((MecanumBot.DRIVE_VELOCITY*motorPowerBackRight)*MecanumBot.YJ312_TICKS_PER_REVOLUTION)/60);
+		bot.lFMotor.setPower(motorPowerFrontLeft);
+		bot.rFMotor.setPower(motorPowerFrontRight);
+		bot.lBMotor.setPower(motorPowerBackLeft);
+		bot.rBMotor.setPower(motorPowerBackRight);
 
 		shooter.loop();
 		intake.loop();
