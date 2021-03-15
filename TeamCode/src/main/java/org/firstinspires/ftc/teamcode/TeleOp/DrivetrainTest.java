@@ -11,7 +11,6 @@ import org.firstinspires.ftc.teamcode.Robot.MecanumBot;
 public class DrivetrainTest extends OpMode {
     private static final double STICK_THRESH = 0.09375;
 
-
     private MecanumBot bot;
     private Gamepad gamer;
     private  HardwareMap map;

@@ -4,8 +4,8 @@ import com.arcrobotics.ftclib.geometry.Pose2d;
 import com.arcrobotics.ftclib.geometry.Rotation2d;
 import com.arcrobotics.ftclib.geometry.Translation2d;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.roboknights4348.lib.wpimath.src.main.java.edu.wpi.first.wpilibj.estimator.MecanumDrivePoseEstimator;
-import com.roboknights4348.lib.wpimath.src.main.java.edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import com.roboknights4348.lib.wpimath.src.main.java.edu.wpi.first.wpilibj.util.Units;
 import com.roboknights4348.lib.wpimath.src.main.java.edu.wpi.first.wpiutil.math.MatBuilder;
 import com.roboknights4348.lib.wpimath.src.main.java.edu.wpi.first.wpiutil.math.Nat;
@@ -14,6 +14,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Robot.MecanumBot;
 import org.firstinspires.ftc.teamcode.TeleOp.DrivetrainTest;
 
+@TeleOp(name="FusionTest")
 public class FusionTest extends OpMode {
 
     MecanumBot bot;
@@ -48,7 +49,7 @@ public class FusionTest extends OpMode {
         slamera.setPose(startingPosition);
         slamera.start();
         poseEstimator.update(new Rotation2d(Units.degreesToRadians(bot.imu.getZAxisValue())),
-                bot.mecanumDriveKinematics.toWheelSpeeds(new ChassisSpeeds()));
+                bot.getWheelSpeeds());
     }
 
     public void loop()
