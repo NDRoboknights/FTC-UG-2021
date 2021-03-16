@@ -62,6 +62,7 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.google.blocks.ftcrobotcontroller.ProgrammingWebHandlers;
 import com.google.blocks.ftcrobotcontroller.runtime.BlocksOpMode;
 import com.qualcomm.ftccommon.ClassManagerFactory;
@@ -112,6 +113,7 @@ import org.firstinspires.ftc.robotcore.internal.network.WifiDirectChannelChanger
 import org.firstinspires.ftc.robotcore.internal.network.WifiMuteEvent;
 import org.firstinspires.ftc.robotcore.internal.network.WifiMuteStateMachine;
 import org.firstinspires.ftc.robotcore.internal.opmode.ClassManager;
+import org.firstinspires.ftc.robotcore.internal.system.AppAliveNotifier;
 import org.firstinspires.ftc.robotcore.internal.system.AppUtil;
 import org.firstinspires.ftc.robotcore.internal.system.Assert;
 import org.firstinspires.ftc.robotcore.internal.system.PreferencesHelper;
@@ -121,7 +123,6 @@ import org.firstinspires.ftc.robotcore.internal.ui.UILocation;
 import org.firstinspires.ftc.robotcore.internal.webserver.RobotControllerWebInfo;
 import org.firstinspires.ftc.robotserver.internal.programmingmode.ProgrammingModeManager;
 import org.firstinspires.inspection.RcInspectionActivity;
-import com.acmerobotics.dashboard.FtcDashboard;
 
 import java.util.List;
 import java.util.Queue;
@@ -383,7 +384,9 @@ public class FtcRobotControllerActivity extends Activity
     FtcAboutActivity.setBuildTimeFromBuildConfig(BuildConfig.BUILD_TIME);
 
     FtcDashboard.start();
-  }
+    // check to see if there is a preferred Wi-Fi to use.
+    checkPreferredChannel();
+}
 
   protected UpdateUI createUpdateUI() {
     Restarter restarter = new RobotRestarter();
@@ -403,17 +406,6 @@ public class FtcRobotControllerActivity extends Activity
   protected void onStart() {
     super.onStart();
     RobotLog.vv(TAG, "onStart()");
-
-    // If we're start()ing after a stop(), then shut the old robot down so
-    // we can refresh it with new state (e.g., with new hw configurations)
-    shutdownRobot();
-
-    updateUIAndRequestRobotSetup();
-
-    cfgFileMgr.getActiveConfigAndUpdateUI();
-
-    // check to see if there is a preferred Wi-Fi to use.
-    checkPreferredChannel();
 
     entireScreenLayout.setOnTouchListener(new View.OnTouchListener() {
       @Override
@@ -462,7 +454,6 @@ public class FtcRobotControllerActivity extends Activity
     if (preferencesHelper != null) preferencesHelper.getSharedPreferences().unregisterOnSharedPreferenceChangeListener(sharedPreferencesListener);
 
     RobotLog.cancelWriteLogcatToDisk();
-
     FtcDashboard.stop();
   }
 
@@ -610,6 +601,9 @@ public class FtcRobotControllerActivity extends Activity
         }
       }
 
+      // Allow the user to use the Control Hub operating system's UI, instead of relaunching the app
+      AppAliveNotifier.getInstance().disableAppWatchdogUntilNextAppStart();
+
       //Finally, nuke the VM from orbit
       AppUtil.getInstance().exitApplication();
 
@@ -660,7 +654,9 @@ public class FtcRobotControllerActivity extends Activity
     // was some historical confusion about launch codes here, so we err safely
     if (request == RequestCode.CONFIGURE_ROBOT_CONTROLLER.ordinal() || request == RequestCode.SETTINGS_ROBOT_CONTROLLER.ordinal()) {
       // We always do a refresh, whether it was a cancel or an OK, for robustness
+      shutdownRobot();
       cfgFileMgr.getActiveConfigAndUpdateUI();
+      updateUIAndRequestRobotSetup();
     }
   }
 

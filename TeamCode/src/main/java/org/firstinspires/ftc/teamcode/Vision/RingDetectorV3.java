@@ -9,13 +9,7 @@ import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
-import org.openftc.easyopencv.OpenCvInternalCamera;
-import org.openftc.easyopencv.OpenCvInternalCamera2;
 import org.openftc.easyopencv.OpenCvPipeline;
-import org.openftc.easyopencv.OpenCvWebcam;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class RingDetectorV3 {
     public OpenCvCamera webcam;
@@ -41,6 +35,7 @@ public class RingDetectorV3 {
         //phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera2(OpenCvInternalCamera2.CameraDirection.BACK, cameraMonitorViewId);
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hwmp.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         webcam.setPipeline(new RingDetectorV3.RingDetectingPipeline());
+        webcam.openCameraDevice();
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
             public void onOpened() {
