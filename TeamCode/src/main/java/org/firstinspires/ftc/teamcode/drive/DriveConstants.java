@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.drive;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.trajectory.constraints.DriveConstraints;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 /*
@@ -25,6 +26,7 @@ public class DriveConstants {
      */
     public static final double TICKS_PER_REV = 537.6;
     public static final double MAX_RPM = 312;
+    //MAX_VELO 49.48717, kF 14.83653
 
     /*
      * Set RUN_USING_ENCODER to true to enable built-in hub velocity control using drive encoders.
@@ -35,7 +37,7 @@ public class DriveConstants {
      * from DriveVelocityPIDTuner.
      */
     public static final boolean RUN_USING_ENCODER = true;
-    public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(0, 0, 0, getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV));
+    public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(0, 0, 0, 14.83653);
 
     /*
      * These are physical constants that can be determined from your robot (including the track
@@ -88,7 +90,7 @@ public class DriveConstants {
      
      */
     public static DriveConstraints BASE_CONSTRAINTS = new DriveConstraints(
-            52.48291908330528, 52.48291908330528, 0.0,
+            49.48717, 52.48291908330528, 0.0,
             Math.toRadians(360), Math.toRadians(360), 0.0
     );
 

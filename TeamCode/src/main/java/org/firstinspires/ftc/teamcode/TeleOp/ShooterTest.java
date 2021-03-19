@@ -34,8 +34,10 @@ public class ShooterTest extends OpMode {
     {
         if(gamepadF310.x && !xChanged)
         {
-            bot.s1.setVelocity(((MecanumBot.INTAKE_VELOCITY * 145.6) / 60));
-            bot.s2.setVelocity(((MecanumBot.INTAKE_VELOCITY * 145.6) / 60));
+            bot.s1.setVelocity(((MecanumBot.SHOOTER_VELOCITY *
+                    MecanumBot.BARE_TICKS_PER_REVOLUTION) / 60));
+            bot.s2.setVelocity(((MecanumBot.SHOOTER_VELOCITY *
+                    MecanumBot.BARE_TICKS_PER_REVOLUTION) / 60));
             xChanged = true;
         }else if(!gamepadF310.x)
             {

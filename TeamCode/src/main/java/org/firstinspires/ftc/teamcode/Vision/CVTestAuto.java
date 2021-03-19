@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @Config
-@TeleOp(name = "CVTestAuto", group = "Out of this World")
+@TeleOp(name = "CVTest", group = "Out of this World")
 public class CVTestAuto extends OpMode {
 
     public static double rows = 0.71;

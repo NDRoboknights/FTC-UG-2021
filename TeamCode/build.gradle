@@ -32,7 +32,7 @@ dependencies {
     implementation 'com.noahbres.jotai:jotai:1.0.2'
     implementation 'com.spartronics4915.lib:ftc265:2.1.8'
     implementation 'org.openftc:easyopencv:1.4.4'
-    implementation 'com.github.NDRoboknights:wpiforftc:1.13'
+    implementation 'com.github.NDRoboknights:wpiforftc:1.15'
     implementation 'com.acmerobotics.roadrunner:core:0.5.2'
     implementation 'com.acmerobotics.dashboard:dashboard:0.3.10'
 }

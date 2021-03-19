@@ -34,7 +34,8 @@ public class IntakeTest extends OpMode {
     {
         if(gamepadF310.a && !aChanged)
         {
-            bot.intake.setVelocity(((MecanumBot.SHOOTER_VELOCITY * 28) / 60));
+            bot.intake.setVelocity(((MecanumBot.INTAKE_VELOCITY *
+                    MecanumBot.YJ1150_TICKS_PER_REVOLUTION) / 60));
             aChanged = true;
         }else if(!gamepadF310.a)
         {

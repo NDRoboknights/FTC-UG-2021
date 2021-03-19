@@ -15,6 +15,7 @@ import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigu
 import com.roboknights4348.lib.wpimath.src.main.java.edu.wpi.first.wpilibj.kinematics.MecanumDriveKinematics;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.util.REVHubIMU;
 
 public class MecanumBot extends Bot
@@ -28,6 +29,7 @@ public class MecanumBot extends Bot
 	public static final int BARE_TICKS_PER_REVOLUTION = 28;
 	public static final double YJ1150_TICKS_PER_REVOLUTION = 145.6;
 	public static final double YJ312_TICKS_PER_REVOLUTION = 537.6;
+	public static final double UP4_TICKS_PER_REVOLUTION = BARE_TICKS_PER_REVOLUTION * 3.61;
 
 	public static final double encoderMeasurementCovariance = 0.75;
 
@@ -59,15 +61,16 @@ public class MecanumBot extends Bot
 			new Translation2d(-0.217, -0.168),
 			new Translation2d(0.217, -0.168));
 
+	public SampleMecanumDrive rRDrive;
 	public MecanumBot(HardwareMap hardwareMap)
 	{
-		init(hardwareMap);
 		setZPB(DcMotorEx.ZeroPowerBehavior.BRAKE);
+		rRDrive = new SampleMecanumDrive(hardwareMap);
 	}
 
 	public MecanumBot(HardwareMap hardwareMap, DcMotorEx.ZeroPowerBehavior zeroPowerBehavior)
 	{
-		init(hardwareMap);
+	    this(hardwareMap);
 		setZPB(zeroPowerBehavior);
 	}
 
