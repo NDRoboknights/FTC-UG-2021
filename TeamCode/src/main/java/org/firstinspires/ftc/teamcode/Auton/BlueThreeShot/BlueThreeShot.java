@@ -64,9 +64,8 @@ public class BlueThreeShot extends LinearOpMode
                         bot.hopper.setVelocity(0);
                     })
                 .build();
-
+        //bot.rRDrive.setLocalizer(new MecanumBotLocalizer());
         waitForStart();
-        bot.rRDrive.setLocalizer(new MecanumBotLocalizer());
         bot.rRDrive.followTrajectory(trajectory);
     }
 }
