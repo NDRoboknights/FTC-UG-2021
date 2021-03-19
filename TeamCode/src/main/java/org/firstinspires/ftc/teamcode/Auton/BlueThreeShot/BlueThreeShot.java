@@ -6,6 +6,7 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Robot.MecanumBot;
+import org.firstinspires.ftc.teamcode.Robot.MecanumBotLocalizer;
 
 public class BlueThreeShot extends LinearOpMode
 {
@@ -65,7 +66,7 @@ public class BlueThreeShot extends LinearOpMode
                 .build();
 
         waitForStart();
-
+        bot.rRDrive.setLocalizer(new MecanumBotLocalizer());
         bot.rRDrive.followTrajectory(trajectory);
     }
 }
