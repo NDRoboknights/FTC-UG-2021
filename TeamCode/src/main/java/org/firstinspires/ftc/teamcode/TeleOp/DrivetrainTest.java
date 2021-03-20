@@ -65,11 +65,11 @@ public class DrivetrainTest extends OpMode {
         bot.lBMotor.setPower(motorPowerBackLeft);
         bot.rBMotor.setPower(motorPowerBackRight);
 
-        telemetry.addData("Strafe heading: ", Math.toDegrees(angle) - 45);
-        telemetry.addData("Angle X: ", bot.imu.getXAxisValue());
-        telemetry.addData("Angle Y: ", bot.imu.getYAxisValue());
-        telemetry.addData("Angle Z: ", bot.imu.getZAxisValue());
-
-        telemetry.update();
+//        telemetry.addData("Strafe heading: ", Math.toDegrees(angle) - 45);
+//        telemetry.addData("Angle X: ", bot.imu.getXAxisValue());
+//        telemetry.addData("Angle Y: ", bot.imu.getYAxisValue());
+//        telemetry.addData("Angle Z: ", bot.imu.getZAxisValue());
+//
+//        telemetry.update();
     }
 }

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Robot;
+package org.firstinspires.ftc.teamcode.Auton.Localizer;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.localization.Localizer;
@@ -11,10 +11,11 @@ import com.roboknights4348.lib.wpimath.src.main.java.edu.wpi.first.wpiutil.math.
 import com.roboknights4348.lib.wpimath.src.main.java.edu.wpi.first.wpiutil.math.Nat;
 import com.spartronics4915.lib.T265Camera;
 
+import org.firstinspires.ftc.teamcode.Robot.MecanumBot;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class MecanumBotLocalizer implements Localizer
+public class SensorFusionLocalizer implements Localizer
 {
     MecanumBot bot;
     HardwareMap hardwareMap;
@@ -30,7 +31,7 @@ public class MecanumBotLocalizer implements Localizer
 
     T265Camera slamera = new T265Camera(MecanumBot.cameraRelativePosition, MecanumBot.encoderMeasurementCovariance, hardwareMap.appContext);
 
-    public MecanumBotLocalizer(HardwareMap hardwareMap)
+    public SensorFusionLocalizer(HardwareMap hardwareMap)
     {
         this.hardwareMap = hardwareMap;
         bot = new MecanumBot(hardwareMap);

@@ -53,10 +53,10 @@ public class ShooterTest extends OpMode {
             bChanged = false;
         }
         
-        telemetry.addData("Nominal Velocity (rpm)", MecanumBot.SHOOTER_VELOCITY);
-        telemetry.addData("Shooter 1 Velocity (rpm): ", (bot.s1.getVelocity() / 28) * 60);
-        telemetry.addData("Shooter 2 Velocity (rpm): ", (bot.s2.getVelocity() / 28) * 60);
-
-        telemetry.update();
+//        telemetry.addData("Nominal Velocity (rpm)", MecanumBot.SHOOTER_VELOCITY);
+//        telemetry.addData("Shooter 1 Velocity (rpm): ", (bot.s1.getVelocity() / 28) * 60);
+//        telemetry.addData("Shooter 2 Velocity (rpm): ", (bot.s2.getVelocity() / 28) * 60);
+//
+//        telemetry.update();
     }
 }

@@ -13,6 +13,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 import com.roboknights4348.lib.wpimath.src.main.java.edu.wpi.first.wpilibj.kinematics.MecanumDriveKinematics;
+import com.spartronics4915.lib.T265Camera;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
@@ -55,6 +56,8 @@ public class MecanumBot extends Bot
 
 	public Servo hopperServo;
 
+	public T265Camera slamera;
+
 	public MecanumDriveKinematics mecanumDriveKinematics = new MecanumDriveKinematics(
 			new Translation2d(-0.217, 0.168),
 			new Translation2d(0.217, 0.168),
@@ -64,14 +67,9 @@ public class MecanumBot extends Bot
 	public SampleMecanumDrive rRDrive;
 	public MecanumBot(HardwareMap hardwareMap)
 	{
-		setZPB(DcMotorEx.ZeroPowerBehavior.BRAKE);
+		slamera = new T265Camera(MecanumBot.cameraRelativePosition,
+				MecanumBot.encoderMeasurementCovariance, hardwareMap.appContext);
 		rRDrive = new SampleMecanumDrive(hardwareMap);
-	}
-
-	public MecanumBot(HardwareMap hardwareMap, DcMotorEx.ZeroPowerBehavior zeroPowerBehavior)
-	{
-	    this(hardwareMap);
-		setZPB(zeroPowerBehavior);
 	}
 
 	public void init(HardwareMap hardwareMap)
@@ -115,8 +113,8 @@ public class MecanumBot extends Bot
 		rBMotor.setMotorType(motorConfigurationType);
 
 		imu = new REVHubIMU(hardwareMap, "imu", bno055IMU);
-		xDist = hardwareMap.get(Rev2mDistanceSensor.class, "xDist");
-		yDist = hardwareMap.get(Rev2mDistanceSensor.class, "yDist");
+		//dxDist = hardwareMap.get(Rev2mDistanceSensor.class, "xDist");
+		//yDist = hardwareMap.get(Rev2mDistanceSensor.class, "yDist");
 	}
 
 	public void setZPB(DcMotor.ZeroPowerBehavior zpb)
